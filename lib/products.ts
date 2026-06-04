@@ -12,6 +12,7 @@ export const products: Product[] = [
   // ---------------- Injectable ----------------
   {
     slug: "bpc-157",
+    tint: "#c2683f",
     name: "BPC-157",
     fullName: "BPC-157 research vial",
     format: "injectable",
@@ -33,6 +34,7 @@ export const products: Product[] = [
   },
   {
     slug: "tb-500",
+    tint: "#5b8a72",
     name: "TB-500",
     fullName: "TB-500 research vial",
     format: "injectable",
@@ -53,6 +55,7 @@ export const products: Product[] = [
   },
   {
     slug: "ghk-cu",
+    tint: "#b56a8c",
     name: "GHK-Cu",
     fullName: "GHK-Cu research vial",
     format: "injectable",
@@ -74,6 +77,7 @@ export const products: Product[] = [
   },
   {
     slug: "glp-3-rt",
+    tint: "#6f7fc4",
     name: "GLP-3 (RT)",
     fullName: "GLP-3 (RT) research vial",
     format: "injectable",
@@ -96,6 +100,7 @@ export const products: Product[] = [
   },
   {
     slug: "ipamorelin",
+    tint: "#c4a24c",
     name: "Ipamorelin",
     fullName: "Ipamorelin research vial",
     format: "injectable",
@@ -115,6 +120,7 @@ export const products: Product[] = [
   },
   {
     slug: "wolverine-blend",
+    tint: "#b5544b",
     name: "Wolverine Blend",
     fullName: "Wolverine Blend research vial",
     format: "injectable",
@@ -138,6 +144,7 @@ export const products: Product[] = [
   // ---------------- Sublingual ----------------
   {
     slug: "bpc-157-sublingual",
+    tint: "#cf7d4a",
     name: "BPC-157",
     fullName: "BPC-157 sublingual strips",
     format: "sublingual",
@@ -159,6 +166,7 @@ export const products: Product[] = [
   },
   {
     slug: "cjc-1295-ipamorelin-sublingual",
+    tint: "#7aa05a",
     name: "CJC-1295 + Ipamorelin",
     fullName: "CJC-1295 + Ipamorelin sublingual strips",
     format: "sublingual",
@@ -176,6 +184,7 @@ export const products: Product[] = [
   },
   {
     slug: "pt-141-sublingual",
+    tint: "#c45f7a",
     name: "PT-141",
     fullName: "PT-141 sublingual strips",
     format: "sublingual",
@@ -192,6 +201,7 @@ export const products: Product[] = [
   },
   {
     slug: "thymosin-alpha-1-sublingual",
+    tint: "#5fa0a8",
     name: "Thymosin Alpha-1",
     fullName: "Thymosin Alpha-1 sublingual strips",
     format: "sublingual",
@@ -211,6 +221,7 @@ export const products: Product[] = [
   // ---------------- Liquid ----------------
   {
     slug: "nad-plus-liquid",
+    tint: "#8a6fc4",
     name: "NAD+",
     fullName: "NAD+ liquid",
     format: "liquid",
@@ -232,6 +243,7 @@ export const products: Product[] = [
   },
   {
     slug: "glutathione-liquid",
+    tint: "#4f9bb5",
     name: "Glutathione",
     fullName: "Glutathione liquid",
     format: "liquid",

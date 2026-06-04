@@ -163,6 +163,11 @@ export default function Home() {
                   <Reveal key={p.slug} delay={gi * 40 + i * 40}>
                     <Link href={`/product/${p.slug}`} className="group block">
                       <div className="card-night relative aspect-square overflow-hidden rounded-[var(--radius)] border border-line">
+                        <span
+                          className="absolute inset-x-0 top-0 z-10 h-1"
+                          style={{ backgroundColor: p.tint ?? "#c4673a" }}
+                          aria-hidden
+                        />
                         <Image
                           src={p.image}
                           alt={p.fullName}
@@ -175,7 +180,12 @@ export default function Home() {
                         </span>
                       </div>
                       <div className="mt-3 flex items-baseline justify-between gap-2">
-                        <span className="font-display text-lg leading-tight transition-colors group-hover:text-accent-bright">
+                        <span className="flex items-center gap-2 font-display text-lg leading-tight transition-colors group-hover:text-accent-bright">
+                          <span
+                            className="size-2 shrink-0 rounded-full"
+                            style={{ backgroundColor: p.tint ?? "#c4673a" }}
+                            aria-hidden
+                          />
                           {p.name}
                         </span>
                         <span className="shrink-0 font-mono text-xs text-ink-muted">

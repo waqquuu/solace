@@ -65,6 +65,8 @@ export interface Product {
   badges?: string[];
   /** Searchable keyword tags. */
   tags?: string[];
+  /** Per-compound label color (hex), used to color-code cards/labels. */
+  tint?: string;
 }
 
 /** Heavy detail model — loaded only on the product page, keyed by slug. */

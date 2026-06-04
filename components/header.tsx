@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { mainNav } from "@/lib/brand";
 import { Logo } from "./logo";
+import { ThemeToggle } from "./theme-toggle";
 import { useCart } from "./cart-context";
 
 export function Header() {
@@ -69,6 +70,8 @@ export function Header() {
             >
               Enter the catalog
             </Link>
+
+            <ThemeToggle />
 
             <button
               type="button"

@@ -6,10 +6,14 @@ export function formatCurrency(amount: number): string {
 }
 
 export function formatDate(iso: string): string {
+  // Fixed UTC timezone so server and client render identically (avoids a
+  // hydration mismatch — a bare ISO date is parsed as UTC midnight, which can
+  // fall on the previous day in negative-offset local timezones).
   return new Date(iso).toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
     day: "numeric",
+    timeZone: "UTC",
   });
 }
 

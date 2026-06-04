@@ -103,6 +103,11 @@ export default async function ProductPage({
           {/* Image stage */}
           <Reveal className="lg:sticky lg:top-24 lg:self-start">
             <div className="relative aspect-square overflow-hidden rounded-[var(--radius-lg)] border border-line bg-paper-raised">
+              <span
+                className="absolute inset-x-0 top-0 z-10 h-1"
+                style={{ backgroundColor: product.tint ?? "#c4673a" }}
+                aria-hidden
+              />
               <div className="grid-bg pointer-events-none absolute inset-0 opacity-50" aria-hidden />
               <div className="glow absolute left-1/2 top-1/2 size-2/3 -translate-x-1/2 -translate-y-1/2" aria-hidden />
               <Image
@@ -113,7 +118,14 @@ export default async function ProductPage({
                 sizes="(min-width: 1024px) 50vw, 100vw"
                 className="relative object-cover"
               />
-              <span className="absolute left-4 top-4 rounded-full border border-line bg-paper/80 px-3 py-1 font-mono text-[0.62rem] uppercase tracking-wider text-ink backdrop-blur">
+              <span
+                className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full border bg-paper/85 px-3 py-1 font-mono text-[0.62rem] uppercase tracking-wider backdrop-blur"
+                style={{ borderColor: `${product.tint ?? "#c4673a"}59`, color: product.tint ?? "#c4673a" }}
+              >
+                <span
+                  className="size-1.5 rounded-full"
+                  style={{ backgroundColor: product.tint ?? "#c4673a" }}
+                />
                 {FORMAT_LABELS[product.format]}
               </span>
             </div>

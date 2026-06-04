@@ -13,11 +13,18 @@ const STATUS_LABEL: Record<Product["status"], string> = {
 };
 
 export function ProductCard({ product }: { product: Product }) {
+  const tint = product.tint ?? "#c4673a";
   return (
     <Link
       href={`/product/${product.slug}`}
       className="group relative flex flex-col overflow-hidden rounded-[var(--radius-lg)] border border-line bg-paper-raised transition-all duration-300 hover:-translate-y-1 hover:border-line-strong hover:shadow-lift"
     >
+      {/* Per-compound color spine */}
+      <span
+        className="absolute inset-x-0 top-0 z-10 h-1"
+        style={{ backgroundColor: tint }}
+        aria-hidden
+      />
       {/* Image stage */}
       <div className="relative aspect-square overflow-hidden bg-paper-sunken">
         <div
@@ -34,13 +41,21 @@ export function ProductCard({ product }: { product: Product }) {
 
         {/* Top badges */}
         <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
-          <span className="rounded-full border border-line bg-paper/80 px-2.5 py-1 font-mono text-[0.6rem] uppercase tracking-wider text-ink backdrop-blur">
+          <span
+            className="inline-flex items-center gap-1.5 rounded-full border bg-paper/85 px-2.5 py-1 font-mono text-[0.6rem] uppercase tracking-wider backdrop-blur"
+            style={{ borderColor: `${tint}59`, color: tint }}
+          >
+            <span
+              className="size-1.5 rounded-full"
+              style={{ backgroundColor: tint }}
+            />
             {FORMAT_LABELS[product.format]}
           </span>
           {product.badges?.map((b) => (
             <span
               key={b}
-              className="rounded-full bg-accent px-2.5 py-1 font-mono text-[0.6rem] uppercase tracking-wider text-night"
+              className="rounded-full px-2.5 py-1 font-mono text-[0.6rem] uppercase tracking-wider text-paper"
+              style={{ backgroundColor: tint }}
             >
               {b}
             </span>

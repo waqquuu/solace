@@ -1,63 +1,112 @@
 @import "tailwindcss";
 
 /* ============================================================
-   solace club — "Nocturne" design system
-   Aesthetic: dark-first "midnight apothecary" — obsidian base,
-   warm moonlit bone ink, a luminous moonstone accent, sparing
-   champagne. A "dawn" light surface provides contrast rhythm.
+   solace club — dual-theme design system
+   Default: "Dawn" — warm, bright, comforting daylight (light mode).
+   Toggle:  "Nocturne" — the original obsidian midnight apothecary
+            (dark mode, applied via `html.dark`).
+   The footer stays a deep, warm anchor in both themes.
    ============================================================ */
 
 :root {
-  /* Surface scale — dark-first obsidian (the "night") */
+  color-scheme: light;
+
+  /* Surface scale — warm ivory daylight (light default) */
+  --paper: #faf6ee;
+  --paper-raised: #fffdf8;
+  --paper-sunken: #f1e9da;
+
+  /* Foreground scale — warm espresso ink */
+  --ink: #2a2018;
+  --ink-soft: #50443a;
+  --ink-muted: #837060;
+  --ink-faint: #b1a28d;
+
+  /* Hairlines (warm dark on light) */
+  --line: rgba(63, 45, 28, 0.12);
+  --line-strong: rgba(63, 45, 28, 0.22);
+
+  /* Signal accent — terracotta / amber (warm + bright) */
+  --accent: #c4673a;
+  --accent-bright: #e08a4e;
+  --accent-soft: rgba(196, 103, 58, 0.12);
+  --accent-ink: #a24e22;
+
+  /* Secondary detail — warm brass */
+  --gold: #b8893d;
+
+  /* Deepest contrast panel (footer) — stays dark in both themes */
+  --night: #17110b;
+  --night-raised: #221a12;
+  --night-line: rgba(245, 238, 228, 0.1);
+  --night-text: #f3ece0;
+  --night-muted: #b3a48f;
+
+  /* Status colors */
+  --in-stock: #5f8a52;
+  --low-stock: #c0883a;
+
+  --radius: 14px;
+  --radius-lg: 22px;
+
+  /* Elevation — soft, warm shadows for a bright stage */
+  --shadow-soft: 0 1px 2px rgba(63, 45, 28, 0.06),
+    0 12px 30px -16px rgba(63, 45, 28, 0.22);
+  --shadow-lift: 0 2px 8px rgba(63, 45, 28, 0.08),
+    0 30px 60px -28px rgba(63, 45, 28, 0.3);
+
+  --header-h: 76px;
+}
+
+/* ===== Dark mode — the original "Nocturne" night ===== */
+html.dark {
+  color-scheme: dark;
+
   --paper: #0b0f14;
   --paper-raised: #11161d;
   --paper-sunken: #080b0f;
 
-  /* Foreground scale — warm moonlit bone */
   --ink: #e9e7e0;
   --ink-soft: #c4c8cf;
   --ink-muted: #919aa4;
   --ink-faint: #5f6872;
 
-  /* Hairlines (light on dark) */
   --line: rgba(233, 231, 224, 0.1);
   --line-strong: rgba(233, 231, 224, 0.2);
 
-  /* Signal accent — moonstone (luminous blue-silver) */
   --accent: #8fb6cc;
   --accent-bright: #bcdcec;
   --accent-soft: rgba(143, 182, 204, 0.14);
   --accent-ink: #bcdcec;
 
-  /* Secondary detail — champagne / brass (used sparingly) */
   --gold: #c4a878;
 
-  /* Deepest night — footer + basement panels */
   --night: #070a0e;
   --night-raised: #0e131a;
   --night-line: rgba(233, 231, 224, 0.08);
   --night-text: #e9e7e0;
   --night-muted: #8a929c;
 
-  /* Status colors */
   --in-stock: #8fb6cc;
   --low-stock: #c4a878;
 
-  /* Radii + elevation (deep, soft shadows for a dark stage) */
-  --radius: 14px;
-  --radius-lg: 22px;
   --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.4),
     0 12px 32px -16px rgba(0, 0, 0, 0.7);
   --shadow-lift: 0 2px 8px rgba(0, 0, 0, 0.45),
     0 32px 64px -28px rgba(0, 0, 0, 0.85);
-
-  --header-h: 76px;
 }
 
-/* ---- "Dawn" light surface: locally re-maps tokens to light ----
-   Wrap any section in `.section-dawn` and its descendants flip to a
-   warm-paper / dark-ink palette with no per-element class changes. */
+/* ---- "Dawn" contrast band: a local re-map for rhythm ----
+   Light theme: a slightly deeper warm-sand panel.
+   Dark theme:  a luminous light island within the night. */
 .section-dawn {
+  --paper: #f3ebdb;
+  --paper-raised: #fbf6ec;
+  --paper-sunken: #e8dcc8;
+  background-color: var(--paper);
+  color: var(--ink);
+}
+html.dark .section-dawn {
   --paper: #f4f1ea;
   --paper-raised: #faf8f3;
   --paper-sunken: #e8e4da;
@@ -71,8 +120,6 @@
   --accent-bright: #3f7d96;
   --accent-soft: rgba(47, 96, 118, 0.12);
   --accent-ink: #244a5c;
-  background-color: var(--paper);
-  color: var(--ink);
 }
 
 @theme inline {
@@ -179,6 +226,26 @@ body {
   font-feature-settings: "ss01", "cv11";
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* ---- Light ("Dawn") theme: tame the night-only ambiance ----
+   The starfield is meaningless on a bright surface; the moonstone
+   glows become a soft, warm daylight bloom at lower intensity. */
+html:not(.dark) .starfield {
+  display: none;
+}
+html:not(.dark) .glow {
+  opacity: 0.3;
+}
+html:not(.dark) .glow-moon {
+  opacity: 0.28;
+}
+html:not(.dark) .aurora {
+  opacity: 0.14;
+}
+html:not(.dark) .grain-fixed {
+  opacity: 0.025;
 }
 
 ::selection {
