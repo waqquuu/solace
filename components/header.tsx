@@ -33,8 +33,8 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50">
       <div
-        className={`glass border-b transition-all duration-300 ${
-          scrolled ? "border-line" : "border-transparent"
+        className={`glass relative border-b transition-all duration-300 ${
+          scrolled ? "header-accent border-line" : "border-transparent"
         }`}
       >
         <div
@@ -57,19 +57,18 @@ export function Header() {
               >
                 {item.label}
                 {isActive(item.href) && (
-                  <span className="absolute inset-x-4 -bottom-px h-px bg-accent" />
+                  <span className="underline-in absolute inset-x-4 -bottom-px h-0.5 rounded-full bg-accent" />
                 )}
               </Link>
             ))}
           </nav>
 
           <div className="flex items-center gap-2">
-            <Link
-              href="/catalog"
-              className="hidden rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-paper transition-colors hover:bg-accent-bright sm:inline-flex"
-            >
-              Enter the catalog
-            </Link>
+            <span className="hidden sm:block">
+              <Link href="/catalog" className="btn btn-primary">
+                Enter the catalog
+              </Link>
+            </span>
 
             <ThemeToggle />
 

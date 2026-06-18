@@ -19,6 +19,8 @@ export interface CartItem {
   image: string;
   format: string;
   quantity: number;
+  /** Stripe Payment Link for this exact price, if one has been configured. */
+  paymentLink?: string;
 }
 
 interface CartContextValue {

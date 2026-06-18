@@ -20,7 +20,10 @@ export function AnnouncementBar() {
     <div className="relative z-40 border-b border-night-line bg-night text-night-muted">
       <div className="mx-auto flex max-w-7xl items-center justify-center gap-3 px-4 py-2 text-center">
         <p className="font-mono text-[0.66rem] uppercase tracking-[0.2em]">
-          <span className="text-accent-bright">☾</span> {brand.compliance}
+          <span className="text-accent-bright">☾</span>{" "}
+          {brand.status.open
+            ? brand.compliance
+            : `Ordering paused while we move to a larger facility — reopening ${brand.status.reopenDate} with ${brand.status.discountPct}% off all orders. Thank you for the support.`}
         </p>
         <button
           type="button"

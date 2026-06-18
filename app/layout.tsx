@@ -49,7 +49,6 @@ export const metadata: Metadata = {
     "HPLC purity",
     "mass spectrometry",
     "injectable research peptides",
-    "sublingual research peptides",
     "liquid research compounds",
     brand.fullName,
   ],

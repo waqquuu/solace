@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { brand } from "@/lib/brand";
@@ -17,7 +16,45 @@ import { AddToCart } from "@/components/add-to-cart";
 import { ProductTabs } from "@/components/product-tabs";
 import { Reviews } from "@/components/reviews";
 import { ProductCard } from "@/components/product-card";
+import { ProductImage } from "@/components/product-image";
 import { Reveal } from "@/components/reveal";
+
+const TRUST_ICONS = {
+  ledger: (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M5 4h11a2 2 0 0 1 2 2v14l-3-2-3 2-3-2-3 2V6a2 2 0 0 1 2-2Z"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+      <path d="M9 9h6M9 12.5h6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  ),
+  lab: (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M9 3v6.5L4.6 17a2 2 0 0 0 1.7 3h11.4a2 2 0 0 0 1.7-3L15 9.5V3"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+      <path d="M8 3h8M7.5 14h9" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  ),
+  ship: (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M3 7h11v8H3zM14 10h4l3 3v2h-7z"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+      <circle cx="7" cy="18" r="1.6" stroke="currentColor" strokeWidth="1.6" />
+      <circle cx="17.5" cy="18" r="1.6" stroke="currentColor" strokeWidth="1.6" />
+    </svg>
+  ),
+};
 
 export function generateStaticParams() {
   return getAllSlugs().map((slug) => ({ slug }));
@@ -102,21 +139,25 @@ export default async function ProductPage({
         <div className="mt-6 grid gap-10 lg:grid-cols-2 lg:gap-16">
           {/* Image stage */}
           <Reveal className="lg:sticky lg:top-24 lg:self-start">
-            <div className="relative aspect-square overflow-hidden rounded-[var(--radius-lg)] border border-line bg-paper-raised">
+            <div className="relative aspect-square overflow-hidden rounded-[var(--radius-lg)] border border-line bg-gradient-to-b from-paper-raised to-paper-sunken">
               <span
                 className="absolute inset-x-0 top-0 z-10 h-1"
                 style={{ backgroundColor: product.tint ?? "#c4673a" }}
                 aria-hidden
               />
               <div className="grid-bg pointer-events-none absolute inset-0 opacity-50" aria-hidden />
-              <div className="glow absolute left-1/2 top-1/2 size-2/3 -translate-x-1/2 -translate-y-1/2" aria-hidden />
-              <Image
-                src={product.image}
+              <div
+                className="glow float-slow absolute left-1/2 top-1/2 size-2/3 -translate-x-1/2 -translate-y-1/2"
+                style={{ background: `radial-gradient(circle at center, ${product.tint ?? "#c4673a"}, transparent 68%)` }}
+                aria-hidden
+              />
+              <ProductImage
+                light={product.image}
+                dark={product.imageDark}
                 alt={product.fullName}
-                fill
                 priority
                 sizes="(min-width: 1024px) 50vw, 100vw"
-                className="relative object-cover"
+                className="float-slow relative object-cover"
               />
               <span
                 className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full border bg-paper/85 px-3 py-1 font-mono text-[0.62rem] uppercase tracking-wider backdrop-blur"
@@ -136,12 +177,15 @@ export default async function ProductPage({
 
           {/* Buy box */}
           <Reveal delay={80}>
-            <span className="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-ink-muted">
+            <span className="inline-flex items-center gap-2 font-mono text-[0.66rem] uppercase tracking-[0.16em] text-ink-muted">
+              <span
+                className="size-1.5 rounded-full"
+                style={{ backgroundColor: product.tint ?? "#c4673a" }}
+                aria-hidden
+              />
               {product.category} · {product.purity}
             </span>
-            <h1 className="mt-2 font-display text-4xl tracking-tight sm:text-5xl">
-              {product.name}
-            </h1>
+            <h1 className="display-2 mt-2">{product.name}</h1>
 
             <div className="mt-3 flex items-center gap-3">
               <Stars rating={product.rating} size={18} />
@@ -150,9 +194,7 @@ export default async function ProductPage({
               </span>
             </div>
 
-            <p className="mt-5 text-lg leading-relaxed text-ink-soft">
-              {product.blurb}
-            </p>
+            <p className="lead mt-5">{product.blurb}</p>
 
             <div className="mt-8 border-t border-line pt-8">
               <AddToCart product={product} />
@@ -161,16 +203,18 @@ export default async function ProductPage({
             {/* Trust chips */}
             <div className="mt-8 grid grid-cols-3 gap-3">
               {[
-                ["☾", "On the ledger", "Lot-matched"],
-                ["☾", "HPLC + MS", "≥99% target"],
-                ["☾", "US ships", "0–2 days"],
-              ].map(([icon, t, s]) => (
+                { icon: TRUST_ICONS.ledger, t: "On the ledger", s: "Lot-matched" },
+                { icon: TRUST_ICONS.lab, t: "HPLC + MS", s: "≥99% target" },
+                { icon: TRUST_ICONS.ship, t: "US ships", s: "0–2 days" },
+              ].map(({ icon, t, s }) => (
                 <div
                   key={t}
-                  className="rounded-[var(--radius)] border border-line bg-paper-raised px-3 py-3 text-center"
+                  className="group rounded-[var(--radius)] border border-line bg-paper-raised px-3 py-4 text-center transition-colors hover:border-line-strong"
                 >
-                  <p className="text-accent">{icon}</p>
-                  <p className="mt-1 text-xs font-medium">{t}</p>
+                  <span className="mx-auto grid size-8 place-items-center rounded-full bg-accent-soft text-accent transition-transform duration-300 group-hover:-translate-y-0.5">
+                    {icon}
+                  </span>
+                  <p className="mt-2 text-xs font-medium">{t}</p>
                   <p className="font-mono text-[0.56rem] uppercase tracking-wider text-ink-faint">
                     {s}
                   </p>

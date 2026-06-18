@@ -35,6 +35,7 @@ export function CheckoutForm() {
       variantLabel: i.variantLabel,
       unitPrice: i.unitPrice,
       quantity: i.quantity,
+      paymentLink: i.paymentLink,
     }));
 
     const result = await gateway.createCheckoutSession({

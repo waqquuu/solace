@@ -37,7 +37,7 @@ export function ProductTabs({ detail }: ProductTabsProps) {
           >
             {t.label}
             {active === t.id && (
-              <span className="absolute inset-x-3 -bottom-px h-0.5 rounded-full bg-accent" />
+              <span className="underline-in absolute inset-x-3 -bottom-px h-0.5 rounded-full bg-accent" />
             )}
           </button>
         ))}

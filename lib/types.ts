@@ -1,12 +1,19 @@
 export type ProductFormat = "injectable" | "sublingual" | "liquid";
 
 export type ProductCategory =
-  | "Recovery & Repair"
+  | "Regenerative"
+  | "Blend"
   | "Metabolic"
-  | "Cosmetic"
-  | "Vitality"
+  | "Growth"
+  | "Anti-Aging"
   | "Longevity"
-  | "Blends";
+  | "Antioxidant"
+  | "Tanning"
+  | "Blood Flow"
+  | "Anti-Inflammatory"
+  | "Cognitive"
+  | "Sleep"
+  | "Supplies";
 
 export type StockStatus = "in-stock" | "low-stock" | "sold-out";
 
@@ -18,6 +25,12 @@ export interface PriceVariant {
   price: number;
   /** Optional strike-through compare-at price. */
   compareAt?: number;
+  /**
+   * Stripe Payment Link for this exact price point. Stripe issues one link per
+   * price, so each variant carries its own URL. Populated by the operator once
+   * the links are created; consumed by the payments seam in `lib/payments.ts`.
+   */
+  paymentLink?: string;
 }
 
 export interface Review {
@@ -54,8 +67,10 @@ export interface Product {
   blurb: string;
   /** Purity standard label, e.g. "≥99%". */
   purity: string;
-  /** Public image path. */
+  /** Public image path (light theme variant). */
   image: string;
+  /** Public image path for the dark theme variant. */
+  imageDark: string;
   variants: PriceVariant[];
   rating: number;
   reviewCount: number;

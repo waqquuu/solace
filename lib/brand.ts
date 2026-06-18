@@ -19,7 +19,7 @@ export const brand = {
   tagline: "Nothing asserted. Everything recorded.",
   /** Slightly longer supporting line. */
   description:
-    "solace club supplies high-purity research compounds — injectable, sublingual, and liquid — and writes every lot into a permanent, searchable ledger of independent test results. Read the proof before you order.",
+    "solace club supplies high-purity research compounds — injectable and liquid — and writes every lot into a permanent, searchable ledger of independent test results. Read the proof before you order.",
   /** Compliance one-liner shown in the announcement bar and disclaimers. */
   compliance:
     "For laboratory & research use only. Not for human consumption.",
@@ -29,6 +29,18 @@ export const brand = {
   locale: "en_US",
   /** Founding year for copyright. */
   year: 2026,
+
+  /**
+   * Operating status. While relocating to a larger facility the storefront is
+   * paused: every product reads "sold out" and the entry gate + announcement
+   * bar surface the reopen date and the reopening discount. Flip `open` to true
+   * (and lift the per-product `sold-out` statuses) when the lab reopens.
+   */
+  status: {
+    open: false,
+    reopenDate: "July 10",
+    discountPct: 25,
+  },
 
   contact: {
     email: "hello@solace.club",
@@ -78,7 +90,6 @@ export const footerNav = [
     links: [
       { href: "/catalog", label: "All compounds" },
       { href: "/catalog?format=injectable", label: "Injectable" },
-      { href: "/catalog?format=sublingual", label: "Sublingual" },
       { href: "/catalog?format=liquid", label: "Liquid" },
     ],
   },

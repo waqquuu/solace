@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# internal reports (P&L / training data — keep local, not in repo)
+/reports/

@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import type { Product, ProductCategory, ProductFormat } from "@/lib/types";
 import { FORMAT_LABELS } from "@/lib/types";
-import { fromPrice } from "@/lib/products";
+import { fromPrice, CATEGORY_COLORS } from "@/lib/products";
 import { ProductCard } from "./product-card";
 
 type SortKey = "featured" | "price-asc" | "price-desc" | "rating" | "name";
@@ -85,51 +85,30 @@ export function CatalogBrowser({
   return (
     <div>
       {/* Controls */}
-      <div className="flex flex-col gap-5">
-        {/* Format segmented control */}
-        <div className="flex flex-wrap items-center gap-2">
-          <FilterChip
-            active={format === "all"}
-            onClick={() => setFormat("all")}
-          >
-            All formats
-          </FilterChip>
-          {formats.map((f) => (
+      <div className="glass sticky top-[60px] z-30 -mx-4 flex flex-col gap-4 rounded-[var(--radius-lg)] border border-line/60 px-4 py-4 sm:-mx-6 sm:px-6">
+        {/* Row 1: format toggles (left) + search/sort (right) */}
+        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between lg:gap-6">
+          <div className="flex flex-wrap items-center gap-2">
             <FilterChip
-              key={f}
-              active={format === f}
-              onClick={() => setFormat(f)}
+              active={format === "all"}
+              onClick={() => setFormat("all")}
             >
-              {FORMAT_LABELS[f]}
+              All formats
             </FilterChip>
-          ))}
-        </div>
-
-        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-          {/* Category pills */}
-          <div className="no-scrollbar flex gap-2 overflow-x-auto pb-1">
-            <FilterChip
-              subtle
-              active={category === "all"}
-              onClick={() => setCategory("all")}
-            >
-              All
-            </FilterChip>
-            {categories.map((c) => (
+            {formats.map((f) => (
               <FilterChip
-                key={c}
-                subtle
-                active={category === c}
-                onClick={() => setCategory(c)}
+                key={f}
+                active={format === f}
+                onClick={() => setFormat(f)}
               >
-                {c}
+                {FORMAT_LABELS[f]}
               </FilterChip>
             ))}
           </div>
 
           {/* Search + sort */}
           <div className="flex shrink-0 items-center gap-2">
-            <div className="flex h-10 items-center rounded-full border border-line bg-paper-raised px-3 focus-within:border-accent">
+            <div className="flex h-10 flex-1 items-center rounded-full border border-line bg-paper-raised px-3 focus-within:border-accent lg:flex-none">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                 <circle
                   cx="11"
@@ -150,22 +129,62 @@ export function CatalogBrowser({
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search compounds"
                 aria-label="Search compounds"
-                className="w-36 bg-transparent px-2 text-sm outline-none placeholder:text-ink-faint sm:w-48"
+                className="w-full min-w-0 bg-transparent px-2 text-sm outline-none placeholder:text-ink-faint lg:w-48"
               />
             </div>
-            <select
-              value={sort}
-              onChange={(e) => setSort(e.target.value as SortKey)}
-              aria-label="Sort products"
-              className="h-10 rounded-full border border-line bg-paper-raised px-4 text-sm outline-none focus:border-accent"
-            >
-              {SORTS.map((s) => (
-                <option key={s.key} value={s.key}>
-                  {s.label}
-                </option>
-              ))}
-            </select>
+            <div className="relative shrink-0">
+              <select
+                value={sort}
+                onChange={(e) => setSort(e.target.value as SortKey)}
+                aria-label="Sort products"
+                className="h-10 appearance-none rounded-full border border-line bg-paper-raised pl-4 pr-9 text-sm outline-none transition-colors hover:border-line-strong focus:border-accent"
+              >
+                {SORTS.map((s) => (
+                  <option key={s.key} value={s.key}>
+                    {s.label}
+                  </option>
+                ))}
+              </select>
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden
+                className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-ink-muted"
+              >
+                <path
+                  d="M6 9l6 6 6-6"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
           </div>
+        </div>
+
+        {/* Row 2: category pills — wrap to a full-width row, never clipped */}
+        <div className="flex flex-wrap gap-2 border-t border-line/50 pt-4">
+          <FilterChip
+            subtle
+            active={category === "all"}
+            onClick={() => setCategory("all")}
+          >
+            All
+          </FilterChip>
+          {categories.map((c) => (
+            <FilterChip
+              key={c}
+              subtle
+              active={category === c}
+              onClick={() => setCategory(c)}
+              dotColor={CATEGORY_COLORS[c]}
+            >
+              {c}
+            </FilterChip>
+          ))}
         </div>
       </div>
 
@@ -213,24 +232,42 @@ function FilterChip({
   subtle = false,
   onClick,
   children,
+  dotColor,
 }: {
   active: boolean;
   subtle?: boolean;
   onClick: () => void;
   children: React.ReactNode;
+  dotColor?: string;
 }) {
+  // When a category chip with a tint is active, fill it with its own color.
+  const tintActive = active && subtle && dotColor;
   return (
     <button
       type="button"
       onClick={onClick}
-      className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium transition-colors ${
-        active
-          ? subtle
-            ? "bg-accent-soft text-accent-ink"
-            : "bg-ink text-paper"
-          : "border border-line text-ink-muted hover:border-line-strong hover:text-ink"
+      style={
+        tintActive
+          ? { backgroundColor: `${dotColor}1f`, color: dotColor, borderColor: `${dotColor}59` }
+          : undefined
+      }
+      className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+        tintActive
+          ? "border"
+          : active
+            ? subtle
+              ? "bg-accent-soft text-accent-ink"
+              : "bg-ink text-paper"
+            : "border border-line text-ink-muted hover:border-line-strong hover:text-ink"
       }`}
     >
+      {dotColor && (
+        <span
+          className="size-1.5 rounded-full"
+          style={{ backgroundColor: dotColor }}
+          aria-hidden
+        />
+      )}
       {children}
     </button>
   );

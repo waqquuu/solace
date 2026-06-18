@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { brand } from "@/lib/brand";
 import { products, CATEGORIES, FORMATS } from "@/lib/products";
 import type { ProductFormat } from "@/lib/types";
 import { CatalogBrowser } from "@/components/catalog-browser";
@@ -7,7 +8,7 @@ import { Reveal } from "@/components/reveal";
 export const metadata: Metadata = {
   title: "Catalog",
   description:
-    "Browse high-purity research compounds across injectable, sublingual and liquid formats — each independently tested and recorded in the ledger.",
+    "Browse high-purity research compounds across injectable and liquid formats — each independently tested and recorded in the ledger.",
   alternates: { canonical: "/catalog" },
 };
 
@@ -30,14 +31,23 @@ export default async function CatalogPage({
       <div className="glow-moon pointer-events-none absolute -top-10 left-1/2 h-64 w-[44rem] -translate-x-1/2" aria-hidden />
       <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
         <Reveal>
-          <p className="eyebrow">The cabinet</p>
-          <h1 className="mt-3 font-display text-4xl tracking-tight sm:text-5xl">
-            The cabinet
-          </h1>
-          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-soft">
+          <p className="eyebrow">Catalog · {products.length} compounds</p>
+          <h1 className="display-2 mt-3">The cabinet</h1>
+          <p className="lead mt-4 max-w-2xl">
             Every compound here is independently tested and carries its own line
             in the ledger. Filter by format or research category.
           </p>
+          {!brand.status.open && (
+            <div className="mt-6 inline-flex flex-wrap items-center gap-2 rounded-full border border-accent/40 bg-accent-soft px-4 py-2 text-sm text-accent-ink">
+              <span className="size-1.5 rounded-full bg-accent" aria-hidden />
+              <span>
+                Ordering paused while we relocate &mdash; reopening{" "}
+                <strong>{brand.status.reopenDate}</strong> with{" "}
+                <strong>{brand.status.discountPct}% off</strong>. Tap any
+                compound to get notified.
+              </span>
+            </div>
+          )}
         </Reveal>
 
         <div className="mt-10">
