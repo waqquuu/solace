@@ -61,33 +61,34 @@ export function ProductCard({ product }: { product: Product }) {
           </div>
         )}
 
-        {/* Top badges */}
-        <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
-          <span
-            className="inline-flex items-center gap-1.5 rounded-full border bg-paper/85 px-2.5 py-1 font-mono text-[0.6rem] uppercase tracking-wider backdrop-blur"
-            style={{ borderColor: `${tint}59`, color: tint }}
-          >
+        {/* Top badges row — left group wraps; purity stays pinned right */}
+        <div className="absolute inset-x-3 top-3 flex items-start justify-between gap-2">
+          <div className="flex flex-wrap gap-1.5">
             <span
-              className="size-1.5 rounded-full"
-              style={{ backgroundColor: tint }}
-            />
-            {FORMAT_LABELS[product.format]}
-          </span>
-          {product.badges?.map((b) => (
-            <span
-              key={b}
-              className="rounded-full px-2.5 py-1 font-mono text-[0.6rem] uppercase tracking-wider text-paper"
-              style={{ backgroundColor: tint }}
+              className="inline-flex items-center gap-1.5 rounded-full border bg-paper/85 px-2.5 py-1 font-mono text-[0.6rem] uppercase tracking-wider backdrop-blur"
+              style={{ borderColor: `${tint}59`, color: tint }}
             >
-              {b}
+              <span
+                className="size-1.5 rounded-full"
+                style={{ backgroundColor: tint }}
+              />
+              {FORMAT_LABELS[product.format]}
             </span>
-          ))}
-        </div>
+            {product.badges?.map((b) => (
+              <span
+                key={b}
+                className="rounded-full px-2.5 py-1 font-mono text-[0.6rem] uppercase tracking-wider text-paper"
+                style={{ backgroundColor: tint }}
+              >
+                {b}
+              </span>
+            ))}
+          </div>
 
-        {/* Purity badge */}
-        <span className="absolute right-3 top-3 rounded-full border border-line bg-paper/80 px-2.5 py-1 font-mono text-[0.6rem] font-semibold uppercase tracking-wider text-accent-ink backdrop-blur">
-          {product.purity}
-        </span>
+          <span className="shrink-0 rounded-full border border-line bg-paper/80 px-2.5 py-1 font-mono text-[0.6rem] font-semibold uppercase tracking-wider text-accent-ink backdrop-blur">
+            {product.purity}
+          </span>
+        </div>
       </div>
 
       {/* Body */}
