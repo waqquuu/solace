@@ -35,6 +35,12 @@ export function CatalogBrowser({
   const [category, setCategory] = useState<ProductCategory | "all">("all");
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState<SortKey>("featured");
+  // Mobile-only: the format + category filters collapse behind a toggle so the
+  // sticky bar doesn't swallow the screen. Always expanded on lg+ via CSS.
+  const [filtersOpen, setFiltersOpen] = useState(false);
+
+  const activeFilterCount =
+    (format !== "all" ? 1 : 0) + (category !== "all" ? 1 : 0);
 
   const filtered = useMemo(() => {
     let list = products.slice();
@@ -82,76 +88,148 @@ export function CatalogBrowser({
     setSort("featured");
   };
 
+  // Shared control fragments, reused by the desktop and mobile layouts below.
+  const formatChips = (
+    <>
+      <FilterChip active={format === "all"} onClick={() => setFormat("all")}>
+        All formats
+      </FilterChip>
+      {formats.map((f) => (
+        <FilterChip key={f} active={format === f} onClick={() => setFormat(f)}>
+          {FORMAT_LABELS[f]}
+        </FilterChip>
+      ))}
+    </>
+  );
+
+  const categoryChips = (
+    <>
+      <FilterChip
+        subtle
+        active={category === "all"}
+        onClick={() => setCategory("all")}
+      >
+        All
+      </FilterChip>
+      {categories.map((c) => (
+        <FilterChip
+          key={c}
+          subtle
+          active={category === c}
+          onClick={() => setCategory(c)}
+          dotColor={CATEGORY_COLORS[c]}
+        >
+          {c}
+        </FilterChip>
+      ))}
+    </>
+  );
+
+  const searchBox = (
+    <div className="flex h-10 w-full items-center rounded-full border border-line bg-paper-raised px-3 focus-within:border-accent lg:w-auto">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+        <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.6" />
+        <path
+          d="M20 20l-3-3"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+        />
+      </svg>
+      <input
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Search compounds"
+        aria-label="Search compounds"
+        className="w-full min-w-0 bg-transparent px-2 text-sm outline-none placeholder:text-ink-faint lg:w-48"
+      />
+    </div>
+  );
+
+  const sortSelect = (
+    <div className="relative w-full lg:w-auto">
+      <select
+        value={sort}
+        onChange={(e) => setSort(e.target.value as SortKey)}
+        aria-label="Sort products"
+        className="h-10 w-full appearance-none rounded-full border border-line bg-paper-raised pl-4 pr-9 text-sm outline-none transition-colors hover:border-line-strong focus:border-accent lg:w-auto"
+      >
+        {SORTS.map((s) => (
+          <option key={s.key} value={s.key}>
+            {s.label}
+          </option>
+        ))}
+      </select>
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        aria-hidden
+        className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-ink-muted"
+      >
+        <path
+          d="M6 9l6 6 6-6"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </div>
+  );
+
   return (
     <div>
       {/* Controls */}
-      <div className="glass sticky top-[60px] z-30 -mx-4 flex flex-col gap-4 rounded-[var(--radius-lg)] border border-line/60 px-4 py-4 sm:-mx-6 sm:px-6">
-        {/* Row 1: format toggles (left) + search/sort (right) */}
-        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between lg:gap-6">
-          <div className="flex flex-wrap items-center gap-2">
-            <FilterChip
-              active={format === "all"}
-              onClick={() => setFormat("all")}
-            >
-              All formats
-            </FilterChip>
-            {formats.map((f) => (
-              <FilterChip
-                key={f}
-                active={format === f}
-                onClick={() => setFormat(f)}
-              >
-                {FORMAT_LABELS[f]}
-              </FilterChip>
-            ))}
+      <div className="glass sticky top-[60px] z-30 -mx-4 rounded-[var(--radius-lg)] border border-line/60 px-4 py-4 sm:-mx-6 sm:px-6">
+        {/* Desktop (lg+): formats + search/sort inline, categories below */}
+        <div className="hidden flex-col gap-4 lg:flex">
+          <div className="flex items-center justify-between gap-6">
+            <div className="flex flex-wrap items-center gap-2">{formatChips}</div>
+            <div className="flex shrink-0 items-center gap-2">
+              {searchBox}
+              {sortSelect}
+            </div>
           </div>
+          <div className="flex flex-wrap gap-2 border-t border-line/50 pt-4">
+            {categoryChips}
+          </div>
+        </div>
 
-          {/* Search + sort */}
-          <div className="flex shrink-0 items-center gap-2">
-            <div className="flex h-10 flex-1 items-center rounded-full border border-line bg-paper-raised px-3 focus-within:border-accent lg:flex-none">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                <circle
-                  cx="11"
-                  cy="11"
-                  r="7"
-                  stroke="currentColor"
-                  strokeWidth="1.6"
-                />
+        {/* Mobile (<lg): compact toolbar + collapsible filters */}
+        <div className="lg:hidden">
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setFiltersOpen((v) => !v)}
+              aria-expanded={filtersOpen}
+              aria-controls="catalog-filters"
+              className="inline-flex shrink-0 items-center gap-2 rounded-full border border-line bg-paper-raised px-4 py-2 text-sm font-medium transition-colors hover:border-line-strong"
+            >
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden>
                 <path
-                  d="M20 20l-3-3"
+                  d="M3 5h18l-7 8v6l-4-2v-4L3 5Z"
                   stroke="currentColor"
                   strokeWidth="1.6"
-                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
-              <input
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search compounds"
-                aria-label="Search compounds"
-                className="w-full min-w-0 bg-transparent px-2 text-sm outline-none placeholder:text-ink-faint lg:w-48"
-              />
-            </div>
-            <div className="relative shrink-0">
-              <select
-                value={sort}
-                onChange={(e) => setSort(e.target.value as SortKey)}
-                aria-label="Sort products"
-                className="h-10 appearance-none rounded-full border border-line bg-paper-raised pl-4 pr-9 text-sm outline-none transition-colors hover:border-line-strong focus:border-accent"
-              >
-                {SORTS.map((s) => (
-                  <option key={s.key} value={s.key}>
-                    {s.label}
-                  </option>
-                ))}
-              </select>
+              Filters
+              {activeFilterCount > 0 && (
+                <span className="grid size-5 place-items-center rounded-full bg-accent text-[0.62rem] font-bold text-night">
+                  {activeFilterCount}
+                </span>
+              )}
               <svg
                 width="14"
                 height="14"
                 viewBox="0 0 24 24"
                 fill="none"
                 aria-hidden
-                className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-ink-muted"
+                className={`transition-transform duration-300 ${
+                  filtersOpen ? "rotate-180" : ""
+                }`}
               >
                 <path
                   d="M6 9l6 6 6-6"
@@ -161,30 +239,25 @@ export function CatalogBrowser({
                   strokeLinejoin="round"
                 />
               </svg>
+            </button>
+            <div className="flex-1">{sortSelect}</div>
+          </div>
+
+          <div className="mt-2">{searchBox}</div>
+
+          <div
+            id="catalog-filters"
+            className={`grid transition-all duration-300 ${
+              filtersOpen ? "mt-3 grid-rows-[1fr]" : "grid-rows-[0fr]"
+            }`}
+          >
+            <div className="min-h-0 overflow-hidden">
+              <div className="flex flex-wrap gap-2">{formatChips}</div>
+              <div className="mt-3 flex flex-wrap gap-2 border-t border-line/50 pt-3">
+                {categoryChips}
+              </div>
             </div>
           </div>
-        </div>
-
-        {/* Row 2: category pills — wrap to a full-width row, never clipped */}
-        <div className="flex flex-wrap gap-2 border-t border-line/50 pt-4">
-          <FilterChip
-            subtle
-            active={category === "all"}
-            onClick={() => setCategory("all")}
-          >
-            All
-          </FilterChip>
-          {categories.map((c) => (
-            <FilterChip
-              key={c}
-              subtle
-              active={category === c}
-              onClick={() => setCategory(c)}
-              dotColor={CATEGORY_COLORS[c]}
-            >
-              {c}
-            </FilterChip>
-          ))}
         </div>
       </div>
 
