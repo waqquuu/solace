@@ -32,10 +32,6 @@ export function ProductCard({ product }: { product: Product }) {
       />
       {/* Image stage */}
       <div className="relative aspect-square overflow-hidden bg-paper-sunken">
-        <div
-          className="glow absolute left-1/2 top-1/2 size-2/3 -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity duration-500 group-hover:opacity-40"
-          aria-hidden
-        />
         <Vial
           product={product}
           sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"

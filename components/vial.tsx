@@ -42,6 +42,20 @@ export function Vial({
         className="object-cover"
       />
 
+      {/* Per-compound halo. The base vial photo is an opaque near-black square,
+          so the page-level `.glow` behind it is hidden. This bloom layers ON TOP
+          with a `screen` blend, which only ever lightens: the photo's near-black
+          background picks up the tint into a colored halo around the glass, while
+          the brighter vial body and label are barely touched. It intensifies on
+          hover wherever the vial sits inside a `group`. */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-70 mix-blend-screen blur-2xl transition-opacity duration-500 group-hover:opacity-100"
+        style={{
+          background: `radial-gradient(circle at 50% 45%, ${tint} 0%, ${tint}73 38%, transparent 72%)`,
+        }}
+        aria-hidden
+      />
+
       {/* CSS label — sits centered on the vial body */}
       <div
         className="pointer-events-none absolute left-1/2 top-[51%] flex w-[34%] -translate-x-1/2 -translate-y-1/2 flex-col items-center text-center"
