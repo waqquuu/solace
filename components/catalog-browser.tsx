@@ -182,7 +182,7 @@ export function CatalogBrowser({
   return (
     <div>
       {/* Controls */}
-      <div className="glass sticky top-[60px] z-30 -mx-4 rounded-[var(--radius-lg)] border border-line/60 px-4 py-4 sm:-mx-6 sm:px-6">
+      <div className="glass -mx-4 rounded-[var(--radius-lg)] border border-line/60 px-4 py-4 sm:-mx-6 sm:px-6">
         {/* Desktop (lg+): formats + search/sort inline, categories below */}
         <div className="hidden flex-col gap-4 lg:flex">
           <div className="flex items-center justify-between gap-6">
