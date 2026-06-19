@@ -16,7 +16,7 @@ import { AddToCart } from "@/components/add-to-cart";
 import { ProductTabs } from "@/components/product-tabs";
 import { Reviews } from "@/components/reviews";
 import { ProductCard } from "@/components/product-card";
-import { ProductImage } from "@/components/product-image";
+import { Vial } from "@/components/vial";
 import { Reveal } from "@/components/reveal";
 
 const TRUST_ICONS = {
@@ -52,6 +52,17 @@ const TRUST_ICONS = {
       />
       <circle cx="7" cy="18" r="1.6" stroke="currentColor" strokeWidth="1.6" />
       <circle cx="17.5" cy="18" r="1.6" stroke="currentColor" strokeWidth="1.6" />
+    </svg>
+  ),
+  flag: (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M5 21V4M5 4h12l-2 4 2 4H5"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   ),
 };
@@ -151,13 +162,11 @@ export default async function ProductPage({
                 style={{ background: `radial-gradient(circle at center, ${product.tint ?? "#c4673a"}, transparent 68%)` }}
                 aria-hidden
               />
-              <ProductImage
-                light={product.image}
-                dark={product.imageDark}
-                alt={product.fullName}
+              <Vial
+                product={product}
                 priority
                 sizes="(min-width: 1024px) 50vw, 100vw"
-                className="float-slow relative object-cover"
+                className="float-slow"
               />
               <span
                 className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full border bg-paper/85 px-3 py-1 font-mono text-[0.62rem] uppercase tracking-wider backdrop-blur"
@@ -201,10 +210,11 @@ export default async function ProductPage({
             </div>
 
             {/* Trust chips */}
-            <div className="mt-8 grid grid-cols-3 gap-3">
+            <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
               {[
                 { icon: TRUST_ICONS.ledger, t: "On the ledger", s: "Lot-matched" },
                 { icon: TRUST_ICONS.lab, t: "HPLC + MS", s: "≥99% target" },
+                { icon: TRUST_ICONS.flag, t: "Made in USA", s: "US lab" },
                 { icon: TRUST_ICONS.ship, t: "US ships", s: "0–2 days" },
               ].map(({ icon, t, s }) => (
                 <div

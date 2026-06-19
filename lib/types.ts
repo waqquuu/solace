@@ -1,4 +1,4 @@
-export type ProductFormat = "injectable" | "sublingual" | "liquid";
+export type ProductFormat = "lyophilized" | "sublingual" | "solution";
 
 export type ProductCategory =
   | "Regenerative"
@@ -99,24 +99,24 @@ export interface ProductDetail {
 
 export interface ReconstitutionTool {
   kind: "reconstitution" | "dilution";
-  /** Total compound in the container, mg (injectable) or mg total (liquid). */
+  /** Total compound in the container, mg (lyophilized) or mg total (solution). */
   totalMg: number;
   /** Default solvent / volume in mL. */
   defaultSolventMl: number;
-  /** Suggested research aliquot in mcg (injectable) or mg (oral). */
+  /** Suggested research aliquot in mcg (lyophilized) or mg (oral). */
   suggestedDoseMcg: number;
   /** Unit shown for the container. */
   unitLabel: string;
 }
 
 export const FORMAT_LABELS: Record<ProductFormat, string> = {
-  injectable: "Injectable",
+  lyophilized: "Lyophilized",
   sublingual: "Sublingual",
-  liquid: "Liquid",
+  solution: "Solution",
 };
 
 export const FORMAT_BLURBS: Record<ProductFormat, string> = {
-  injectable: "Lyophilized powder in a sealed vial for reconstitution.",
+  lyophilized: "Lyophilized powder in a sealed vial for reconstitution.",
   sublingual: "Oral-dissolving format, individually sealed.",
-  liquid: "Pre-suspended liquid with a graduated dropper.",
+  solution: "Pre-suspended solution with a graduated dropper.",
 };

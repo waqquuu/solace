@@ -17,9 +17,11 @@ export const brand = {
   legalName: "Solace Club Research, LLC",
   /** One-line positioning statement. */
   tagline: "Nothing asserted. Everything recorded.",
+  /** Country of manufacture, surfaced as a trust signal across the site. */
+  madeIn: "USA",
   /** Slightly longer supporting line. */
   description:
-    "solace club supplies high-purity research compounds — injectable and liquid — and writes every lot into a permanent, searchable ledger of independent test results. Read the proof before you order.",
+    "solace club supplies high-purity research compounds, manufactured in the USA, and writes every lot into a permanent, searchable ledger of independent test results. Read the proof before you order.",
   /** Compliance one-liner shown in the announcement bar and disclaimers. */
   compliance:
     "For laboratory & research use only. Not for human consumption.",
@@ -89,8 +91,8 @@ export const footerNav = [
     title: "The cabinet",
     links: [
       { href: "/catalog", label: "All compounds" },
-      { href: "/catalog?format=injectable", label: "Injectable" },
-      { href: "/catalog?format=liquid", label: "Liquid" },
+      { href: "/catalog?format=lyophilized", label: "Lyophilized" },
+      { href: "/catalog?format=solution", label: "Solution" },
     ],
   },
   {

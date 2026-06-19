@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ProductImage } from "@/components/product-image";
+import { Vial } from "@/components/vial";
 import { brand } from "@/lib/brand";
 import { products, FORMATS, fromPrice } from "@/lib/products";
 import { ledger, recentLots } from "@/lib/coa";
@@ -9,6 +9,7 @@ import { FORMAT_LABELS, FORMAT_BLURBS } from "@/lib/types";
 import { Reveal } from "@/components/reveal";
 import { Ledger } from "@/components/ledger";
 import { QuoteRotator } from "@/components/quote-rotator";
+import { MadeInUsa, MadeInUsaSeal } from "@/components/made-in-usa";
 
 const latest = recentLots(1)[0];
 const featured = products.find((p) => p.featured) ?? products[0];
@@ -32,15 +33,18 @@ export default function Home() {
           {/* Copy column */}
           <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
             <Reveal>
-              <span className="inline-flex items-center gap-2.5 font-mono text-[0.62rem] uppercase tracking-[0.28em] text-ink-muted">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
-                  <path
-                    d="M15.8 3.4A9 9 0 1 0 20.6 18 7.4 7.4 0 0 1 15.8 3.4Z"
-                    fill="var(--accent)"
-                  />
-                </svg>
-                {brand.fullName}
-              </span>
+              <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-3 lg:justify-start">
+                <span className="inline-flex items-center gap-2.5 font-mono text-[0.62rem] uppercase tracking-[0.28em] text-ink-muted">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
+                    <path
+                      d="M15.8 3.4A9 9 0 1 0 20.6 18 7.4 7.4 0 0 1 15.8 3.4Z"
+                      fill="var(--accent)"
+                    />
+                  </svg>
+                  {brand.fullName}
+                </span>
+                <MadeInUsa />
+              </div>
             </Reveal>
 
             <Reveal delay={80}>
@@ -52,8 +56,8 @@ export default function Home() {
 
             <Reveal delay={160}>
               <p className="lead mt-7 max-w-xl">
-                High-purity research compounds — injectable and liquid. Every lot
-                is tested by an independent lab and written into a permanent
+                High-purity research compounds, manufactured in the USA. Every
+                lot is tested by an independent lab and written into a permanent
                 ledger you can read. Nothing here asks for your faith.
               </p>
             </Reveal>
@@ -115,6 +119,7 @@ export default function Home() {
               href={`/product/${featured.slug}`}
               className="group relative mx-auto block aspect-square w-full max-w-[26rem]"
             >
+              <MadeInUsaSeal className="absolute -left-3 -top-3 z-20 w-24 rotate-[-9deg] transition-transform duration-500 group-hover:rotate-0 sm:-left-5 sm:-top-5 sm:w-28" />
               <div
                 className="glow-moon pointer-events-none absolute inset-0 -z-10 scale-110"
                 aria-hidden
@@ -132,13 +137,11 @@ export default function Home() {
                   style={{ backgroundColor: featured.tint ?? "#c4673a" }}
                   aria-hidden
                 />
-                <ProductImage
-                  light={featured.image}
-                  dark={featured.imageDark}
-                  alt={featured.fullName}
+                <Vial
+                  product={featured}
                   priority
                   sizes="(min-width: 1024px) 30vw, 80vw"
-                  className="float-slow relative object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                  className="float-slow transition-transform duration-700 group-hover:scale-[1.04]"
                 />
                 <div className="absolute inset-x-4 bottom-4 flex items-center justify-between gap-3 rounded-full border border-line bg-paper/85 px-4 py-2.5 backdrop-blur">
                   <span className="flex items-center gap-2 font-display text-sm leading-tight">
@@ -232,12 +235,10 @@ export default function Home() {
                           style={{ backgroundColor: p.tint ?? "#c4673a" }}
                           aria-hidden
                         />
-                        <ProductImage
-                          light={p.image}
-                          dark={p.imageDark}
-                          alt={p.fullName}
+                        <Vial
+                          product={p}
                           sizes="(min-width: 1024px) 22vw, 45vw"
-                          className={`object-cover transition-transform duration-500 group-hover:scale-105 ${
+                          className={`transition-transform duration-500 group-hover:scale-105 ${
                             p.status === "sold-out" ? "opacity-60 saturate-[0.85]" : ""
                           }`}
                         />

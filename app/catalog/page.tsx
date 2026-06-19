@@ -8,7 +8,7 @@ import { Reveal } from "@/components/reveal";
 export const metadata: Metadata = {
   title: "Catalog",
   description:
-    "Browse high-purity research compounds across injectable and liquid formats — each independently tested and recorded in the ledger.",
+    "Browse high-purity research compounds, manufactured in the USA — each independently tested and recorded in the ledger.",
   alternates: { canonical: "/catalog" },
 };
 

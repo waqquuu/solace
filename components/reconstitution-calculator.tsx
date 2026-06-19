@@ -18,15 +18,13 @@ export function ReconstitutionCalculator({ tool }: { tool: ReconstitutionTool })
     concentrationMcgMl > 0 ? doseMcg / concentrationMcgMl : 0;
   const unitsPerContainer =
     doseMcg > 0 ? (totalMg * 1000) / doseMcg : 0;
-  // 1 mL on a U-100 insulin syringe = 100 units.
-  const insulinUnits = volumePerDoseMl * 100;
 
-  const isInjectable = tool.kind === "reconstitution";
+  const isReconstitution = tool.kind === "reconstitution";
 
   return (
     <div className="rounded-[var(--radius-lg)] border border-line bg-paper-raised p-6">
       <h3 className="font-display text-xl">
-        {isInjectable ? "Reconstitution calculator" : "Concentration calculator"}
+        {isReconstitution ? "Reconstitution calculator" : "Concentration calculator"}
       </h3>
       <p className="mt-1 text-sm text-ink-muted">
         A planning aid for laboratory measurement. Figures are arithmetic only —
@@ -35,13 +33,13 @@ export function ReconstitutionCalculator({ tool }: { tool: ReconstitutionTool })
 
       <div className="mt-6 grid gap-4 sm:grid-cols-3">
         <Field
-          label={isInjectable ? "Compound in vial" : "Compound in bottle"}
+          label={isReconstitution ? "Compound in vial" : "Compound in bottle"}
           suffix="mg"
           value={totalMg}
           onChange={setTotalMg}
         />
         <Field
-          label={isInjectable ? "Solvent added" : "Liquid volume"}
+          label={isReconstitution ? "Solvent added" : "Solution volume"}
           suffix="mL"
           value={solventMl}
           onChange={setSolventMl}
@@ -63,12 +61,6 @@ export function ReconstitutionCalculator({ tool }: { tool: ReconstitutionTool })
           label="Volume per aliquot"
           value={`${volumePerDoseMl.toFixed(3)} mL`}
         />
-        {isInjectable && (
-          <Result
-            label="On a U-100 syringe"
-            value={`${insulinUnits.toFixed(1)} units`}
-          />
-        )}
         <Result
           label="Aliquots per container"
           value={`${Math.floor(unitsPerContainer)}`}

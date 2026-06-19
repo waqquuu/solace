@@ -38,7 +38,7 @@ export default function ShippingPage() {
 
       <h2>Cold-chain items</h2>
       <p>
-        Temperature-sensitive products — such as liquids and certain
+        Temperature-sensitive products — such as solutions and certain
         reconstitution-ready compounds — ship with appropriate cold-pack
         protection. Refrigerate applicable items on arrival per the handling
         notes on each product page.
@@ -47,7 +47,7 @@ export default function ShippingPage() {
       <h2>Storage on arrival</h2>
       <ul>
         <li>Lyophilized vials: store at −20 °C, protected from light.</li>
-        <li>Liquids: refrigerate at 2–8 °C, protected from light.</li>
+        <li>Solutions: refrigerate at 2–8 °C, protected from light.</li>
         <li>Sublingual strips: keep sealed in a cool, dry place.</li>
       </ul>
 

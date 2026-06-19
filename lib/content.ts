@@ -23,7 +23,7 @@ export const testimonials: Testimonial[] = [
   {
     title: "Calm, careful packaging",
     quote:
-      "Sealed, labeled, traceable. The liquid arrived cold and the concentration matched the certificate.",
+      "Sealed, labeled, traceable. The solution arrived cold and the concentration matched the certificate.",
     author: "S. Okafor",
     date: "2026-04-13",
   },
@@ -93,12 +93,12 @@ export const faqs: Faq[] = [
     a: "Every lot is written into our public ledger alongside its independent HPLC purity and mass-spec identity. Open The Ledger, type the lot number printed on your label, and read the exact record for the unit in your hand. The accredited lab that ran the analysis can confirm it directly.",
   },
   {
-    q: "What is the difference between injectable, sublingual, and liquid formats?",
-    a: "Injectable vials are lyophilized powder for laboratory reconstitution. Sublingual strips are pre-measured oral-dissolving units. Liquids are pre-suspended solutions with a graduated dropper. Format choice is a matter of research workflow; all are tested to the same standard.",
+    q: "What is the difference between lyophilized, sublingual, and solution formats?",
+    a: "Lyophilized vials are powder for laboratory reconstitution. Sublingual strips are pre-measured oral-dissolving units. Solutions are pre-suspended with a graduated dropper. Format choice is a matter of research workflow; all are tested to the same standard.",
   },
   {
     q: "How are orders shipped?",
-    a: "Orders are processed within 0–2 business days and ship domestically within the US with tracking. Temperature-sensitive items (such as liquids) ship with appropriate cold-pack protection.",
+    a: "Orders are processed within 0–2 business days and ship domestically within the US with tracking. Temperature-sensitive items (such as solutions) ship with appropriate cold-pack protection.",
   },
   {
     q: "What is your purity standard?",

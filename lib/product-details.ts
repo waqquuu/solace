@@ -682,14 +682,14 @@ export const productDetails: Record<string, ProductDetail> = {
     ],
   },
 
-  "nad-plus-liquid": {
+  "nad-plus-solution": {
     overview: [
-      "NAD+ (nicotinamide adenine dinucleotide) is a coenzyme central to redox reactions and is studied in the context of cellular energy metabolism and sirtuin-related pathways. This format is supplied as a pre-suspended liquid with a graduated dropper.",
+      "NAD+ (nicotinamide adenine dinucleotide) is a coenzyme central to redox reactions and is studied in the context of cellular energy metabolism and sirtuin-related pathways. This format is supplied as a pre-suspended solution with a graduated dropper.",
       "Concentration is verified analytically and reported on the batch COA.",
       COA_DISCLAIMER,
     ],
     specs: [
-      { label: "Format", value: "Liquid (graduated dropper)" },
+      { label: "Format", value: "Solution (graduated dropper)" },
       { label: "Active", value: "NAD+ coenzyme" },
       { label: "Volume", value: "30 mL" },
       { label: "Purity", value: "≥98% (HPLC)" },
@@ -712,18 +712,18 @@ export const productDetails: Record<string, ProductDetail> = {
     ],
     reviews: [
       review("r1", "H. Sato", "2026-04-20", 5, "Concentration matched", "Assay on the COA matched our internal check. Dropper is accurate."),
-      review("r2", "B. Costa", "2026-03-29", 4, "Good liquid format", "No reconstitution needed. Arrived cold-packed."),
+      review("r2", "B. Costa", "2026-03-29", 4, "Good solution format", "No reconstitution needed. Arrived cold-packed."),
     ],
   },
 
-  "glutathione-liquid": {
+  "glutathione-solution": {
     overview: [
-      "Glutathione is a reduced tripeptide (γ-glutamyl-cysteinyl-glycine) studied as a primary intracellular antioxidant and redox buffer. This format is supplied as a pre-suspended liquid with a graduated dropper.",
+      "Glutathione is a reduced tripeptide (γ-glutamyl-cysteinyl-glycine) studied as a primary intracellular antioxidant and redox buffer. This format is supplied as a pre-suspended solution with a graduated dropper.",
       "Concentration is verified analytically and reported on the batch COA.",
       COA_DISCLAIMER,
     ],
     specs: [
-      { label: "Format", value: "Liquid (graduated dropper)" },
+      { label: "Format", value: "Solution (graduated dropper)" },
       { label: "Active", value: "Reduced L-glutathione (GSH)" },
       { label: "Volume", value: "30 mL" },
       { label: "Purity", value: "≥98% (HPLC)" },
@@ -960,7 +960,7 @@ export const productDetails: Record<string, ProductDetail> = {
       "For laboratory use only. Not for human or veterinary use.",
     ],
     specs: [
-      { label: "Composition", value: "Water for injection + 0.9% benzyl alcohol" },
+      { label: "Composition", value: "Sterile water + 0.9% benzyl alcohol" },
       { label: "Volume", value: "30 mL" },
       { label: "Grade", value: "USP" },
       { label: "Sterility", value: "Sealed, multi-withdrawal vial" },
@@ -972,7 +972,7 @@ export const productDetails: Record<string, ProductDetail> = {
       "Discard per your laboratory's protocol once the in-use window has elapsed.",
     ],
     references: [
-      { label: "USP — Bacteriostatic Water for Injection monograph", url: "https://www.usp.org/" },
+      { label: "USP — Bacteriostatic Water monograph", url: "https://www.usp.org/" },
     ],
     reviews: [
       review("r1", "M. Halloran", "2026-04-17", 5, "Lab staple", "Exactly what you need for reconstitution. Sealed and clean."),

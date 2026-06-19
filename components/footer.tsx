@@ -2,6 +2,7 @@ import Link from "next/link";
 import { brand, footerNav, complianceStatement } from "@/lib/brand";
 import { Logo } from "./logo";
 import { Newsletter } from "./newsletter";
+import { MadeInUsa } from "./made-in-usa";
 
 export function Footer() {
   return (
@@ -16,6 +17,10 @@ export function Footer() {
               ships — independently tested, matched to your label, and yours to
               read. For laboratory and research use only.
             </p>
+
+            <div className="mt-5">
+              <MadeInUsa tone="dark" />
+            </div>
 
             <div className="mt-8">
               <p className="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-night-text">

@@ -4,7 +4,7 @@ import { FORMAT_LABELS } from "@/lib/types";
 import { fromPrice } from "@/lib/products";
 import { formatCurrency } from "@/lib/format";
 import { Stars } from "./stars";
-import { ProductImage } from "./product-image";
+import { Vial } from "./vial";
 
 const STATUS_LABEL: Record<Product["status"], string> = {
   "in-stock": "In stock",
@@ -36,12 +36,10 @@ export function ProductCard({ product }: { product: Product }) {
           className="glow absolute left-1/2 top-1/2 size-2/3 -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity duration-500 group-hover:opacity-40"
           aria-hidden
         />
-        <ProductImage
-          light={product.image}
-          dark={product.imageDark}
-          alt={product.fullName}
+        <Vial
+          product={product}
           sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-          className={`relative object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.07] ${
+          className={`transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.07] ${
             soldOut ? "opacity-60 saturate-[0.85]" : ""
           }`}
         />

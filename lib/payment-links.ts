@@ -42,12 +42,12 @@ export const PAYMENT_LINKS: Record<string, string> = {
   "ghk-cu-100mg": "", // 100 mg · $44.99
 
   // ---- Longevity ----
-  "nad-plus-liquid": "", // 30 mL · 500 mg · $62.99
+  "nad-plus-solution": "", // 30 mL · 500 mg · $62.99
   epithalon: "", // 10 mg · $26.99
   "thymosin-alpha-1": "", // 10 mg · $35.99
 
   // ---- Antioxidant ----
-  "glutathione-liquid": "", // 30 mL · 1500 mg · $53.99
+  "glutathione-solution": "", // 30 mL · 1500 mg · $53.99
 
   // ---- Tanning / Blood Flow / Anti-Inflammatory ----
   "melanotan-ii": "", // 10 mg · $26.99

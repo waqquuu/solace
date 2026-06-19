@@ -35,28 +35,21 @@ export const CATEGORY_COLORS: Record<ProductCategory, string> = {
 };
 
 /**
- * Category → shared vial render base name. Recovery lines reuse one image
- * family. Each base has a `-light` and `-dark` PNG so the storefront can swap
- * the product shot to match the active theme (warm ivory vs obsidian).
+ * Format → shared vial render base. A single uniform vial photo backs every
+ * product so the silhouette, cap, and proportions are identical across the
+ * catalog; the compound name, label, and accent bar are drawn on top in real
+ * type by the `Vial` component. Lyophilized (and sublingual) products show
+ * powder; solutions show clear liquid. Each base has a `-light` (ivory) and
+ * `-dark` (obsidian) PNG so the shot swaps to match the active theme.
  */
-const CATEGORY_IMAGE_BASE: Record<ProductCategory, string> = {
-  Regenerative: "recovery",
-  Blend: "recovery",
-  Metabolic: "metabolic",
-  Growth: "growth",
-  "Anti-Aging": "anti-aging",
-  Longevity: "longevity",
-  Antioxidant: "antioxidant",
-  Tanning: "tanning",
-  "Blood Flow": "blood-flow",
-  "Anti-Inflammatory": "anti-inflammatory",
-  Cognitive: "cognitive",
-  Sleep: "sleep",
-  Supplies: "supplies",
+const FORMAT_IMAGE_BASE: Record<ProductFormat, "powder" | "solution"> = {
+  lyophilized: "powder",
+  sublingual: "powder",
+  solution: "solution",
 };
 
-const categoryImage = (category: ProductCategory, theme: "light" | "dark") =>
-  `/products/${CATEGORY_IMAGE_BASE[category]}-${theme}.png`;
+const vialImage = (format: ProductFormat, theme: "light" | "dark") =>
+  `/products/vial-${FORMAT_IMAGE_BASE[format]}-${theme}.png`;
 
 /** Listing entries without the derived `tint` / `image` (added below). */
 type ProductSeed = Omit<Product, "tint" | "image" | "imageDark">;
@@ -67,7 +60,7 @@ const seeds: ProductSeed[] = [
     slug: "bpc-157",
     name: "BPC-157",
     fullName: "BPC-157 research vial",
-    format: "injectable",
+    format: "lyophilized",
     category: "Regenerative",
     blurb:
       "A 15-amino-acid peptide studied for tissue protection and angiogenesis in preclinical models.",
@@ -84,7 +77,7 @@ const seeds: ProductSeed[] = [
     slug: "tb-500",
     name: "TB-500",
     fullName: "TB-500 research vial",
-    format: "injectable",
+    format: "lyophilized",
     category: "Regenerative",
     blurb:
       "Synthetic fragment of thymosin beta-4 studied for actin regulation and cell migration.",
@@ -100,7 +93,7 @@ const seeds: ProductSeed[] = [
     slug: "wolverine-blend",
     name: "Wolverine Blend",
     fullName: "BPC-157 + TB-500 (Wolverine) research vial",
-    format: "injectable",
+    format: "lyophilized",
     category: "Blend",
     blurb:
       "Co-formulated BPC-157 + TB-500 for combined tissue-repair research.",
@@ -117,7 +110,7 @@ const seeds: ProductSeed[] = [
     slug: "glow-blend",
     name: "GLOW Blend",
     fullName: "GLOW (BPC-157 + TB-500 + GHK-Cu) research vial",
-    format: "injectable",
+    format: "lyophilized",
     category: "Blend",
     blurb:
       "Triple recovery blend of BPC-157, TB-500, and GHK-Cu in a single vial.",
@@ -134,7 +127,7 @@ const seeds: ProductSeed[] = [
     slug: "klow-blend",
     name: "KLOW Blend",
     fullName: "KLOW (BPC-157 + TB-500 + GHK-Cu + KPV) research vial",
-    format: "injectable",
+    format: "lyophilized",
     category: "Blend",
     blurb:
       "Four-component blend adding KPV to the GLOW base for combined repair research.",
@@ -152,7 +145,7 @@ const seeds: ProductSeed[] = [
     slug: "glp-3-rt-20mg",
     name: "GLP-3 (RT)",
     fullName: "GLP-3 (RT) 20 mg research vial",
-    format: "injectable",
+    format: "lyophilized",
     category: "Metabolic",
     blurb:
       "A triple-agonist research peptide targeting GIP, GLP-1, and glucagon receptors.",
@@ -169,7 +162,7 @@ const seeds: ProductSeed[] = [
     slug: "glp-3-rt-30mg",
     name: "GLP-3 (RT)",
     fullName: "GLP-3 (RT) 30 mg research vial",
-    format: "injectable",
+    format: "lyophilized",
     category: "Metabolic",
     blurb:
       "A triple-agonist research peptide targeting GIP, GLP-1, and glucagon receptors.",
@@ -184,7 +177,7 @@ const seeds: ProductSeed[] = [
     slug: "glp-3-rt-10mg",
     name: "GLP-3 (RT)",
     fullName: "GLP-3 (RT) 10 mg research vial",
-    format: "injectable",
+    format: "lyophilized",
     category: "Metabolic",
     blurb:
       "A triple-agonist research peptide targeting GIP, GLP-1, and glucagon receptors.",
@@ -199,7 +192,7 @@ const seeds: ProductSeed[] = [
     slug: "aod-9604",
     name: "AOD-9604",
     fullName: "AOD-9604 research vial",
-    format: "injectable",
+    format: "lyophilized",
     category: "Metabolic",
     blurb:
       "Modified fragment of human growth hormone (176–191) studied in lipid-metabolism models.",
@@ -214,7 +207,7 @@ const seeds: ProductSeed[] = [
     slug: "5-amino-1mq",
     name: "5-Amino-1MQ",
     fullName: "5-Amino-1MQ research compound",
-    format: "injectable",
+    format: "lyophilized",
     category: "Metabolic",
     blurb:
       "Small-molecule NNMT inhibitor studied in cellular energy and adipocyte models.",
@@ -230,7 +223,7 @@ const seeds: ProductSeed[] = [
     slug: "mots-c",
     name: "MOTS-C",
     fullName: "MOTS-c research vial",
-    format: "injectable",
+    format: "lyophilized",
     category: "Metabolic",
     blurb:
       "Mitochondrial-derived peptide studied for metabolic regulation and exercise-mimetic pathways.",
@@ -248,7 +241,7 @@ const seeds: ProductSeed[] = [
     slug: "cjc-1295-ipamorelin",
     name: "CJC-1295 / Ipamorelin",
     fullName: "CJC-1295 / Ipamorelin (No DAC) research vial",
-    format: "injectable",
+    format: "lyophilized",
     category: "Growth",
     blurb:
       "Co-formulated secretagogue pair (No DAC) commonly co-studied in growth-hormone research.",
@@ -264,7 +257,7 @@ const seeds: ProductSeed[] = [
     slug: "ipamorelin",
     name: "Ipamorelin",
     fullName: "Ipamorelin research vial",
-    format: "injectable",
+    format: "lyophilized",
     category: "Growth",
     blurb:
       "Selective pentapeptide studied as a growth-hormone secretagogue in preclinical work.",
@@ -279,7 +272,7 @@ const seeds: ProductSeed[] = [
     slug: "tesamorelin",
     name: "Tesamorelin",
     fullName: "Tesamorelin research vial",
-    format: "injectable",
+    format: "lyophilized",
     category: "Growth",
     blurb:
       "Stabilized GHRH analog studied for growth-hormone axis signaling in preclinical models.",
@@ -294,7 +287,7 @@ const seeds: ProductSeed[] = [
     slug: "igf-1-lr3",
     name: "IGF-1 LR3",
     fullName: "IGF-1 LR3 research vial",
-    format: "injectable",
+    format: "lyophilized",
     category: "Growth",
     blurb:
       "Long-acting insulin-like growth factor analog studied in cell-proliferation models.",
@@ -311,7 +304,7 @@ const seeds: ProductSeed[] = [
     slug: "ghk-cu-50mg",
     name: "GHK-Cu",
     fullName: "GHK-Cu 50 mg research vial",
-    format: "injectable",
+    format: "lyophilized",
     category: "Anti-Aging",
     blurb:
       "Naturally occurring copper tripeptide studied for matrix remodeling and collagen pathways.",
@@ -328,7 +321,7 @@ const seeds: ProductSeed[] = [
     slug: "ghk-cu-100mg",
     name: "GHK-Cu",
     fullName: "GHK-Cu 100 mg research vial",
-    format: "injectable",
+    format: "lyophilized",
     category: "Anti-Aging",
     blurb:
       "Naturally occurring copper tripeptide studied for matrix remodeling and collagen pathways.",
@@ -342,10 +335,10 @@ const seeds: ProductSeed[] = [
 
   // ---------------- Longevity ----------------
   {
-    slug: "nad-plus-liquid",
+    slug: "nad-plus-solution",
     name: "NAD+",
-    fullName: "NAD+ liquid",
-    format: "liquid",
+    fullName: "NAD+ solution",
+    format: "solution",
     category: "Longevity",
     blurb:
       "Pre-suspended NAD+ coenzyme studied for cellular energy and sirtuin pathways.",
@@ -355,14 +348,14 @@ const seeds: ProductSeed[] = [
     reviewCount: 209,
     status: "sold-out",
     featured: true,
-    badges: ["Liquid"],
+    badges: ["Solution"],
     tags: ["coenzyme", "longevity", "sirtuin", "dropper"],
   },
   {
     slug: "epithalon",
     name: "Epithalon",
     fullName: "Epithalon research vial",
-    format: "injectable",
+    format: "lyophilized",
     category: "Longevity",
     blurb:
       "Synthetic tetrapeptide studied in the context of telomerase activity and circadian regulation.",
@@ -377,7 +370,7 @@ const seeds: ProductSeed[] = [
     slug: "thymosin-alpha-1",
     name: "Thymosin Alpha-1",
     fullName: "Thymosin Alpha-1 research vial",
-    format: "injectable",
+    format: "lyophilized",
     category: "Longevity",
     blurb:
       "28-amino-acid peptide studied for T-cell signaling and immune-modulation pathways.",
@@ -391,10 +384,10 @@ const seeds: ProductSeed[] = [
 
   // ---------------- Antioxidant ----------------
   {
-    slug: "glutathione-liquid",
+    slug: "glutathione-solution",
     name: "Glutathione",
-    fullName: "Glutathione liquid",
-    format: "liquid",
+    fullName: "Glutathione solution",
+    format: "solution",
     category: "Antioxidant",
     blurb:
       "Reduced glutathione tripeptide studied as a primary intracellular antioxidant.",
@@ -403,7 +396,7 @@ const seeds: ProductSeed[] = [
     rating: 4.7,
     reviewCount: 118,
     status: "sold-out",
-    badges: ["Liquid"],
+    badges: ["Solution"],
     tags: ["antioxidant", "tripeptide", "redox", "dropper"],
   },
 
@@ -412,7 +405,7 @@ const seeds: ProductSeed[] = [
     slug: "melanotan-ii",
     name: "Melanotan II",
     fullName: "Melanotan II research vial",
-    format: "injectable",
+    format: "lyophilized",
     category: "Tanning",
     blurb:
       "Melanocortin-receptor research peptide studied in melanogenesis pathways.",
@@ -429,7 +422,7 @@ const seeds: ProductSeed[] = [
     slug: "pt-141",
     name: "PT-141",
     fullName: "PT-141 research vial",
-    format: "injectable",
+    format: "lyophilized",
     category: "Blood Flow",
     blurb:
       "Bremelanotide, a melanocortin-receptor research peptide studied in vascular signaling models.",
@@ -446,7 +439,7 @@ const seeds: ProductSeed[] = [
     slug: "kpv",
     name: "KPV",
     fullName: "KPV research vial",
-    format: "injectable",
+    format: "lyophilized",
     category: "Anti-Inflammatory",
     blurb:
       "Alpha-MSH-derived tripeptide studied for anti-inflammatory signaling pathways.",
@@ -463,7 +456,7 @@ const seeds: ProductSeed[] = [
     slug: "semax",
     name: "Semax",
     fullName: "Semax research vial",
-    format: "injectable",
+    format: "lyophilized",
     category: "Cognitive",
     blurb:
       "ACTH(4–10)-derived peptide studied in neurotrophic and cognitive-signaling models.",
@@ -478,7 +471,7 @@ const seeds: ProductSeed[] = [
     slug: "selank",
     name: "Selank",
     fullName: "Selank research vial",
-    format: "injectable",
+    format: "lyophilized",
     category: "Cognitive",
     blurb:
       "Tuftsin-derived peptide studied in anxiolytic and immunomodulatory research models.",
@@ -495,7 +488,7 @@ const seeds: ProductSeed[] = [
     slug: "dsip",
     name: "DSIP",
     fullName: "DSIP research vial",
-    format: "injectable",
+    format: "lyophilized",
     category: "Sleep",
     blurb:
       "Delta sleep-inducing peptide studied in sleep-architecture and neuromodulation models.",
@@ -512,7 +505,7 @@ const seeds: ProductSeed[] = [
     slug: "bacteriostatic-water",
     name: "Bacteriostatic Water",
     fullName: "Bacteriostatic Water (30 mL)",
-    format: "liquid",
+    format: "solution",
     category: "Supplies",
     blurb:
       "0.9% benzyl-alcohol bacteriostatic water for laboratory reconstitution of lyophilized compounds.",
@@ -538,8 +531,8 @@ export const products: Product[] = seeds.map((seed) => {
       ? seed.variants.map((v) => ({ ...v, paymentLink: link }))
       : seed.variants,
     tint: CATEGORY_COLORS[seed.category],
-    image: categoryImage(seed.category, "light"),
-    imageDark: categoryImage(seed.category, "dark"),
+    image: vialImage(seed.format, "light"),
+    imageDark: vialImage(seed.format, "dark"),
   };
 });
 
@@ -559,7 +552,7 @@ export const CATEGORIES: ProductCategory[] = [
   "Supplies",
 ];
 
-export const FORMATS: ProductFormat[] = ["injectable", "liquid"];
+export const FORMATS: ProductFormat[] = ["lyophilized", "solution"];
 
 export function getProduct(slug: string): Product | undefined {
   return products.find((p) => p.slug === slug);
